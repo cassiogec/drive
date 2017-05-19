@@ -11,6 +11,7 @@ import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.FileContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
+import org.mortbay.jetty.ResourceCache;
 
 /**
  *
@@ -73,10 +75,18 @@ public class ClienteVideo
 //        File arqTeste = new File();
 //        arqTeste.setName("TESTE");
 //        arqTeste.setMimeType("application/vnd.google-apps.drive-sdk");
-//
+//        arqTeste.setDescription("Testano alguma coisa");
 //        // Print the names and IDs for up to 10 files.
 //        File arq = driveService.files().create(arqTeste).execute();
-//        
-//        System.out.println(arq);
+//        System.out.println(arq);  
+        
+        File fileMetadata = new File();
+        fileMetadata.setName("foto.jpg");
+        java.io.File filePath = new java.io.File("/var/www/html/pessoal/drive/jules.jpg");
+        FileContent mediaContent = new FileContent("image/jpeg", filePath);
+        File file = driveService.files().create(fileMetadata, mediaContent).setFields("id").execute();
+
+        
+//        driveService.files().delete(result.getFiles().get(0).getId()).execute();
     }
 }
